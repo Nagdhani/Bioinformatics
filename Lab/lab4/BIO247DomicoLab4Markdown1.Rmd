@@ -1,0 +1,31 @@
+---
+title: "BIO247Lab4Markdown"
+author: "Whitney Domico"
+date: "2022-09-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r include=TRUE}
+Lab4Data <- read.csv("C:\\Users\\Whitn\\OneDrive\\Desktop\\BIO247\\BIO247Lab\\BIO247Lab4\\MachineRead_output.csv")
+LEEs <- Lab4Data$Paper.ID
+```
+
+```{r}
+Lab4Data$Paper.ID <- gsub("\\]", "", Lab4Data$Paper.ID)
+Lab4Data$Paper.ID <- gsub("\\[", "", Lab4Data$Paper.ID)
+Lab4Data$Paper.ID <- gsub("\\'", "", Lab4Data$Paper.ID)
+Lab4Data$Paper.ID <- gsub(" ", "", Lab4Data$Paper.ID)
+```
+
+```{r}
+for (each in c(length(LEEs):1)){
+  if (length(unique(unlist(strsplit(Lab4Data$Paper.ID[each], ",")))) == 1){
+    Lab4Data <- Lab4Data[-c(each),]
+  }
+}
+
+```
+
