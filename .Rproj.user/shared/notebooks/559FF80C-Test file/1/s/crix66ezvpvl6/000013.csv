@@ -1,0 +1,1 @@
+"0","dataframe$Calc_TotScore <- (dataframe$Kind.Score+(dataframe$Evidence.Score*dataframe$Match.Score))*dataframe$Epistemic.Value"

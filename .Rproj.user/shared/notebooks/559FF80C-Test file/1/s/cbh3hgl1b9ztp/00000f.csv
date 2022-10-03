@@ -1,0 +1,2 @@
+"0","#columns"
+"0","df<- subset(dataframe, select = -c(Calc_TotScore))"

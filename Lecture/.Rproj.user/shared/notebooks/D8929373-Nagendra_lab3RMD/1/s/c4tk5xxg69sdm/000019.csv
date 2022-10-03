@@ -1,0 +1,4 @@
+"0","Test_V_outputs_short <- subset(Test_V_outputs, select = -c(Cell.Type, Location, Organism))"
+"0","Test_V_outputs_short <- Test_V_outputs_short[1:100,]"
+"0","write.csv(Test_V_outputs_short, ""//Users//nagendra//Desktop//Bioinformatics//Lab//lab3//Test_V_ouputs_short.csv"")"
+"0",""

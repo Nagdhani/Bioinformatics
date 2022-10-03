@@ -1,0 +1,4 @@
+"0","list1<- gsub(""\\["","""",Test_V_output$`Paper ID`)"
+"0","list2<-gsub(""\\]"","""",list1)"
+"0","list3<- gsub(""\'"","""",list2)"
+"0","list4 <- gsub("" "", """", list3)"

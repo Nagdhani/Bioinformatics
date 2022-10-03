@@ -1,0 +1,74 @@
+---
+title: "Lab3"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+date: "2022-09-19"
+---
+**Exercise 1: Rows & Columns**
+
+*1.1: Uploading the Test_V_output.csv*
+
+The dataframe was uploaded using the files tab in r studio. 
+
+*1.2: Saving a vector with total score values*
+
+The total score column was saved to a vector named tot_scores. This was done by assigning the vector with a c() function while referencing the total score column in the Test_V_output dataframe. Test_V_output data frame was obtained from Dr. Casey Hansen and contains data on many molecules and their interactions. 
+```{r}
+Test_V_outputs <- read.csv(file = "//Users//nagendra//Desktop//Bioinformatics//Lecture//Test_V_output.csv"  , sep = ",", header = TRUE)
+```
+
+```{r Exercise 1.2}
+tot_scores <- c(Test_V_outputs$Total.Score)
+```
+*1.3: Finding the Total Score of p53 molecule*
+
+The total score value was indexed for p53 by referencing a cell in the dataframe.
+
+```{r Exercise 1.3}
+Test_V_outputs[2,"Total.Score"]
+```
+**Exercise 2: Mean and Stddev**
+
+*2.1: Finding the mean and stdv*
+
+The mean of the total score column was calculated using the mean function and the tot_scores vector 
+```{r Exercise 2.1}
+mean(tot_scores)
+```
+The standard deviation of the total score column was calculated using the standard deviation function and the tot_scores vector
+```{r Exercise 2.1.2}
+sd(tot_scores)
+```
+*2.2: Finding unique PMCID*
+The gsub function was first used to replace all junk symbols with "nothing". Since the Paper ID column is a vector of strings, the strsplit function was then used to split the characters in the string that are seperated by commas. The unlist function was then used to turn the output from the strsplit function into a vector. The unique function was used to find unique values in the split_ID vector that contains the ID's. The length function then counts the number of characters in the list that is output of the unique function.   
+```{r}
+list1<- gsub("\\[","",Test_V_outputs$`Paper.ID`)
+list2<-gsub("\\]","",list1)
+list3<- gsub("\'","",list2)
+list4 <- gsub(" ", "", list3)
+split_ID <- unlist(strsplit(list4, ","))
+length(unique(split_ID))
+```
+**Exercise 3: Vectorization**
+
+*3.1: Creating my own Total scores column*
+A new column called Calc_score was made to calculate the total score values of specific molecules by indexing specific score values and performing multiplication. The total score equation in Total Score = (Kind+(Evidence*Match))*Epistemic.  
+```{r}
+Test_V_outputs$Calc_TotScore <- (Test_V_outputs$Kind.Score+(Test_V_outputs$Evidence.Score*Test_V_outputs$Match.Score))*Test_V_outputs$Epistemic.Value
+```
+
+**Exercise 4: Subsets**
+
+*4.1 Deleting rows and columns*
+
+The Cell Type, Location, and organism columns were deleted using a subset function and saved to a dataframe named Test_V_outputs_short. The same dataframe was then modified further by removing all rows except the first 100 by subsetting rows. This new truncated data frame was saved as a new csv file using thee write.csv function.
+
+```{r}
+Test_V_outputs_short <- subset(Test_V_outputs, select = -c(Cell.Type, Location, Organism))
+Test_V_outputs_short <- Test_V_outputs_short[1:100,]
+write.csv(Test_V_outputs_short, "//Users//nagendra//Desktop//Bioinformatics//Lab//lab3//Test_V_ouputs_short.csv")
+
+```
+
