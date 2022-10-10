@@ -33,13 +33,14 @@ data and was downloaded on 9/12/22 from [github](https://github.com/vsbuffalo/bd
 - **Poster**: contains the final poster as well as any figures/pictures that were used in the poster. The poster will be saved in .ppt format and any relavent figures will be saved as .png or .jpg format. 
 
 ## Test_submissions
-This folder contains any relavent files that were submitted or used for a test. 
+This folder holds any files that were submitted or used for a test. 
 
-**Test_1**: Contains files for test 1. 
+**Test_1**: Contains any files that were used for Exam1 
 
-**Test_2**: Contains files for test 2. 
+**Test_2**: Contains any files that were used for Exam1 
 
 
 ## dubjay-bioinformatics
 
-Branch repository for the class github repository. 
+This file is a branch repository in the class repository that was created by the instructor. 
+
