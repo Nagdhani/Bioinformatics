@@ -32,5 +32,14 @@ data and was downloaded on 9/12/22 from [github](https://github.com/vsbuffalo/bd
 - **CodingScripts**: Contains any scripts that were used to analyze data
 - **Poster**: contains the final poster as well as any figures/pictures that were used in the poster. The poster will be saved in .ppt format and any relavent figures will be saved as .png or .jpg format. 
 
+## Test_submissions
+This folder contains any relavent files that were submitted or used for a test. 
+
+**Test_1**: Contains files for test 1. 
+
+**Test_2**: Contains files for test 2. 
 
 
+## dubjay-bioinformatics
+
+Branch repository for the class github repository. 
