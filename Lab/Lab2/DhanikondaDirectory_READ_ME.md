@@ -31,6 +31,7 @@ data and was downloaded on 9/12/22 from [github](https://github.com/vsbuffalo/bd
 - **FinalREADME**: contains the finalized README file for the project
 - **CodingScripts**: Contains any scripts that were used to analyze data
 - **Poster**: contains the final poster as well as any figures/pictures that were used in the poster. The poster will be saved in .ppt format and any relavent figures will be saved as .png or .jpg format. 
+- **Relavent_paper**: contains any pdfs of any papers that are useful for the project
 
 ## Test_submissions
 This folder holds any files that were submitted or used for a test. 
