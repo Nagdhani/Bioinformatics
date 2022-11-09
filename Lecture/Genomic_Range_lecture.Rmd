@@ -1,0 +1,88 @@
+---
+title: "Genomic_DNARange_Lecture"
+output: html_document
+date: "2022-10-25"
+---
+```{r}
+#irange is a type of data container that is a dataframe for range data
+rng1 <- IRanges(start=4, end=13)
+rng2 <- IRanges(start=4, width=3)
+Multiple_Ranges <- IRanges(start = c(4,7,2,20), end= c(13,7,2,23)
+                           
+names(Multiple_Ranges) <- letters[1:4]
+```
+
+
+
+```{r}
+#growing range on both sides 
+Multiple_Ranges <- IRanges(start= c(40,80), end= c(67,114))
+Multiple_Ranges + 4L
+
+#growing range on one side
+end(Multiple_Ranges) <- end(Multiple_Ranges) + 4L
+```
+
+
+
+
+```{r}
+#restrict neighborhood of ranges 
+y <- IRanges(start=c(4,6,10,12), width=13) 
+ restrict(y,5,10)
+ 
+ #flank finds ranges immediately before 
+ flank(Multiple_Ranges, width=7)
+ #immidiately after
+ flank(Multiple_Ranges, width=7, start=FALSE)
+```
+
+
+
+
+```{r}
+#overlapping ranges can reduce ranges to be continous or easier to manage
+#Creates random ranges and then reduce them
+set.seed(0)
+alns <- IRanges(start=sample(seq_len(50),20), width=5)
+head(alns,4)
+reduce(alns)
+
+#to learn gaps in range data
+gaps(alns)
+```
+
+
+
+```{r}
+#to learn where overlap is occuring
+a <- IRanges(start=4, end=13)
+b <- IRanges(start=12, end=17)
+intersect(a,b)
+```
+
+
+
+```{r}
+findOverlaps(a, b)
+```
+
+```{r}
+qry <- IRanges(start=6, end=13, name='query')
+sbj <- IRanges(start= c(2,4,18,19), end= c(4,5,21,24), names=1:4)
+nearest(qry, sbj)
+precede(qry, sbj)
+follow(qry, sbj)
+```
+
+
+```{r}
+library(GenomicRanges)
+gr1 <- GRanges(seqname=c("chr1", "chr1", "chr2", "chr3"), ranges=IRanges(start=5:8, width=10), strand=c("+", "-", "-", "+"))
+gr1
+gr2 <- GRanges(seqname=c("chr1", "chr1", "chr2", "chr3"), ranges=IRanges(start=5:8, width=10), strand=c("+", "-", "-", "+"), gc=round(runif(4), 3))
+gr2
+#metadata column is looking at GC percentage
+
+```
+
