@@ -1,0 +1,131 @@
+---
+title: "Dhanikonda_Lab6"
+output:
+  word_document: default
+  html_document: default
+date: "2022-10-24"
+---
+Importing dataframe and renaming columns
+```{r}
+Conc_data <- read.csv("Conc_data.csv")
+colnames(Conc_data) <- c('Time (ms)','[ProtA]','[ProtB]','[ProtC]','[ProtD]')
+
+```
+
+```{r}
+ACTG5257_CD4 <- read.delim("~/Desktop/Bioinformatics/Project/Data/ACTG5257_CD4.txt", header=FALSE)
+colnames(ACTG5257_CD4) <- c('V1','[V2]','[V3]')
+```
+
+
+
+
+Figure 1:  The concentration of Protein A (M) over time (ms). There seems to be no association between the two variables.
+
+```{r}
+plot(Conc_data$`Time (ms)`, Conc_data$`[ProtA]`, xaxs='i', xlab='Time (ms)', yaxs='i', ylab='Protein A Concentration (M)', main='', pch=19, col= 'black', cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5, cex=1.5,xlim=c(0,120),ylim=c(0,1.5))
+
+```
+
+
+Figure 2: Scatter plots of the concentrations (M) of proteins A (black), B (blue), C (red), D (green), and time (ms). There is no association between the concentration of protein A and time, a linear association between the concentration of protein B and time, no association between the concentration of protein C and time, and a Michaelis-Menten association between the concentration of protein D and time (ms).
+
+```{r}
+plot(Conc_data$`Time (ms)`, Conc_data$`[ProtA]`, xaxs='i', xlab='Time (ms)', yaxs='i', ylab='Protein Concentration (M)', main='', pch=19, col= 'black', cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5, cex=1.5, xlim=c(0,120),ylim=c(0,10))
+points(Conc_data$`Time (ms)`, Conc_data$`[ProtB]`, pch=19, col='blue')
+points(Conc_data$`Time (ms)`, Conc_data$`[ProtC]`,pch=19, col='red')
+points(Conc_data$`Time (ms)`, Conc_data$`[ProtD]`,pch=19, col='green')
+```
+
+
+
+Figure 3: Line graphs of the concentrations (M) of proteins A (black),  B (blue),  C (red), D (green), and time (ms). There is no association between the concentration of protein A and time, a linear association between the concentration of protein B and time, no association between the concentration of protein C and time, and a Michaelis-Menten association between the concentration of protein D and time (ms). 
+
+
+```{r}
+plot(Conc_data$`Time (ms)`, Conc_data$`[ProtA]`, xaxs='i', xlab='Time (ms)', yaxs='i', ylab='Protein Concentration', main='', pch=19, col= 'black', cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5, cex=1.5, xlim=c(0,120),ylim=c(0,10),type='l',lwd=1.3)
+#lwd is for line width
+lines(Conc_data$`Time (ms)`, Conc_data$`[ProtB]`, col='blue')
+lines(Conc_data$`Time (ms)`, Conc_data$`[ProtC]`, col='red')
+lines(Conc_data$`Time (ms)`, Conc_data$`[ProtD]`, col='green')
+```
+
+
+
+
+Figure 4: Line graph of the concentrations (M) of proteins A, B, C, D, and time (ms). There is no association between the concentration of protein A and time a, a linear association between the concentration of protein B and time, no association between the concentration of protein C and time, and a Michaelis-Menten association between the concentration of protein D and time (ms). 
+
+```{r}
+plot(Conc_data$`Time (ms)`, Conc_data$`[ProtA]`, xaxs='i', xlab='Time (ms)', yaxs='i', ylab='Protein Concentration (M)', main='', col= 'black', cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5, cex=1.5, xlim=c(0,120),ylim=c(0,10),type='l',lwd=1.3)
+lines(Conc_data$`Time (ms)`, Conc_data$`[ProtB]`, col='blue')
+lines(Conc_data$`Time (ms)`, Conc_data$`[ProtC]`, col='red')
+lines(Conc_data$`Time (ms)`, Conc_data$`[ProtD]`, col='green')
+legend('bottomright', c('Protein A','Protein B','Protein C','Protein D'), lty=1, col=c('black', 'blue', 'red', 'green') )
+
+#lwd is for line width
+```
+
+
+Figure 5: Scatter plot of the concentrations (M) of protein A, B, C, D, and time (ms). There is no association between the concentration of protein A and time, a linear association between the concentration of protein B and time, no association between the concentration of protein C and time, and a Michaelis-Menten association between the concentration of protein D and time (ms). 
+
+```{r}
+plot(Conc_data$`Time (ms)`, Conc_data$`[ProtA]`, xaxs='i', xlab='Time (ms)', yaxs='i', ylab='Protein Concentration', main='', pch=19, col= 'black', cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5, cex=1.5, xlim=c(0,120),ylim=c(0,40))
+points(Conc_data$`Time (ms)`, Conc_data$`[ProtB]`, pch=19, col='blue')
+points(Conc_data$`Time (ms)`, Conc_data$`[ProtC]`,pch=19, col='red')
+points(Conc_data$`Time (ms)`, Conc_data$`[ProtD]`,pch=19, col='green')
+
+#legend code
+legend('bottomright', c('Protein A','Protein B','Protein C','Protein D'), pch = 19, col=c('black', 'blue', 'red', 'green') )
+```
+
+
+Figure 6: Scatter plot of the concentrations (M) of protein A (top left), B (top right), C (bottom left), D (bottom right), and time (ms). There is no association between the concentration of protein A and time, a linear association between the concentration of protein B and time, no association between the concentration of protein C and time, and a Michaelis-Menten association between the concentration of protein D and time (ms). 
+
+```{r}
+old.par <- par(mfrow=c(2,2))
+plot(Conc_data$`Time (ms)`, Conc_data$`[ProtA]`, xaxs='i', xlab='Time (ms)', yaxs='i', ylab='Protein A Concentration (M)', main='', pch=19, col= 'black', cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5, cex=1.5, xlim=c(0,120),ylim=c(0,1.5))
+plot(Conc_data$`Time (ms)`, Conc_data$`[ProtB]`, xaxs='i', xlab='Time (ms)', yaxs='i', ylab='Protein B Concentration (M)', main='', pch=19, col= 'black', cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5, cex=1.5, xlim=c(0,120),ylim=c(0,100))
+plot(Conc_data$`Time (ms)`, Conc_data$`[ProtC]`, xaxs='i', xlab='Time (ms)', yaxs='i', ylab='Protein C Concentration (M)', main='', pch=19, col= 'black', cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5, cex=1.5, xlim=c(0,120),ylim=c(0,5))
+plot(Conc_data$`Time (ms)`, Conc_data$`[ProtD]`, xaxs='i', xlab='Time (ms)', yaxs='i', ylab='Protein D Concentration (M)', main='', pch=19, col= 'black', cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5, cex=1.5, xlim=c(0,120),ylim=c(0,2))
+par(old.par)
+
+```
+
+Figure 7: A scatter plot of the concentration of protein B (M) over time (ms). There is a linear association between the concentration of protein B and time, as shown by the linear regression line. 
+
+```{r}
+plot(Conc_data$`Time (ms)`, Conc_data$`[ProtB]`, xaxs='i', xlab='Time (ms)', yaxs='i', ylab='Protein B Concentration', main='', pch=20, col= 'black', cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5, cex=1.5,xlim=c(0,110),ylim=c(0,60),)
+abline(lm(Conc_data$`[ProtB]` ~ Conc_data$`Time (ms)`))
+
+
+```
+
+
+Figure 8: A scatter plot of the concentration (M) of protein D over time (ms). A regression line, using the Michaelis-Menten equation, was fitted over the data. The relationship between the concentration of protein D and time seems to fit the Michaelis-Menten model. 
+```{r}
+
+
+fit <- nls(Conc_data$`[ProtD]`~a*Conc_data$`Time (ms)`/(b+Conc_data$`Time (ms)`), data=Conc_data, start= list(a=1,b=1))
+cor(Conc_data$`[ProtD]`, predict(fit))
+
+plot(Conc_data$`Time (ms)`, Conc_data$`[ProtD]`, xaxs='i', xlab='Time (ms)', yaxs='i', ylab='Protein D Concentration', main='', pch=20, col= 'black', cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1, cex=1.5,xlim=c(0,110),ylim=c(0,1.5),)
+lines(Conc_data$`Time (ms)`, predict(fit))
+
+
+```
+
+Figure 9: A scatter graph of CD4+ T cell count (per cubic millimeter) in HIV+ patient 260047 since the start of antiretroviral therapy. The patient underwent antiretroviral combination therapy using azidothymidine (AZT) and Didanosine (DDI). CD4+ T cell count seems to increase and decrease in cycles. There was a sharp decrease in cell count at day 35, which is peculiar as the viral mRNA copies for day 35 is lower than those for the days preceding. However, each low per cycle is higher than the previous cycle's, suggesting that the combination therapy is working. 
+
+```{r}
+
+PatientID260047 <- ACTG5257_CD4[-2,]  
+PatientID260047F <-PatientID260047[-c(15:3580),]
+PatientID260047FF <-PatientID260047F[-1,]
+plot(PatientID260047FF$V2, PatientID260047FF$V3, xaxs='i', xlab='Days Elapsed', yaxs='i', ylab='CD4+ T cell count/cubic millimeter', main='', pch=19, col= 'black', cex.lab=1.5, cex.axis=1.5, cex.main=1.5, cex.sub=1.5, cex=1.5,xlim=c(0,230),ylim=c(0,300))
+
+```
+
+
+
+```
+

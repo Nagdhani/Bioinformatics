@@ -1,0 +1,4 @@
+"0","#density plot pt1"
+"0","library(ggplot2)"
+"0","GBM_data<- read.csv(""//Users//nagendra//Desktop//Bioinformatics//Test_submissions//GBM_data.csv"")"
+"0","ggplot(GBM_data) + geom_density(aes(x=Total.Score), fill=""black"")"

@@ -1,0 +1,3 @@
+"0","#Threshold density plot"
+"0","Short_GBM_data <- GBM_data[1:707,]"
+"0","ggplot(Short_GBM_data) + geom_density(aes(x=Total.Score), fill=""black"")"

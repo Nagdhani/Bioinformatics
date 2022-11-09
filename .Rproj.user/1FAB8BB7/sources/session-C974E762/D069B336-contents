@@ -1,0 +1,125 @@
+---
+title: "R Day4"
+output: html_document
+date: "2022-09-20"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Indexing
+list
+```{r}
+word<-"tacocat"
+substr(word,1,1)
+substr(word,1,4)
+substr(word,1,7)
+```
+
+## If/Else Statements
+
+```{r echo=FALSE}
+#shirt<-"red"
+#shirt<-"yellow"
+#shirt<-"green"
+#shirt<-"blue"
+shirt<-"white"
+```
+^^ this is to choose the value of 'shirt'
+```{r echo=FALSE}
+if (shirt=="red") {
+  print("Eat apple") 
+} else if (shirt=="yellow"){
+  print("Eat banana")
+} else if (shirt=="green"){
+  print("Eat spinach")
+} else if (shirt=="blue"){
+  print ("Eat blueberries")
+} else {
+  print ("Eat yogurt")
+} 
+```
+
+## While Functions
+
+```{r echo=FALSE}
+num <- 6
+while (num<20){
+  num <- num+1
+}
+```
+
+Example 
+
+```{r}
+stop <- sample (1:1000,1)
+num <- 1
+while (num<stop){
+  print("...")
+  num <- num+1
+}
+print("Pop!")
+```
+
+## For Functions
+
+```{r echo=FALSE}
+vect1 <- c(1,2,3)
+for (each in vect1){
+  print(each)
+}
+```
+
+## Graphs
+
+to plot a dataframe column density
+
+```{r include=TRUE}
+ggplot(Test_V_output)+ geom_density(aes(x=Total.Score, fill="red"))
+```
+
+to plot a dataframe column density with specific restraints -- %in% = only; >, <, !=
+
+```{r include=TRUE}
+ggplot(Test_V_output[Test_V_output$Total.Score > 140,])+ geom_density(aes(x=Total.Score, fill="red"))
+ggplot(Dataset_S1[Dataset_S1$total.SNPs >70,])+geom_point(aes(x=total.SNPs, y=total.Bases))
+```
+
+to plot a bar chart
+
+```{r}
+ggplot(TestData) + geom_bar(aes(x=Divergence.binned2))
+```
+
+## Binning
+
+new column name <- cut(column to be binned, number of bins needed)
+```{r include=TRUE}
+TestData$Divergence.binned <- cut(TestData$Divergence, 5)
+```
+OR
+new column name <- cut(column to be binned, c(x, y, z))
+
+```{r include=TRUE}
+TestData$Divergence.binned2 <- cut(TestData$Divergence, c(-0.2, 0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 1.6))
+```
+
+## Coding Diagrams
+
+For unique paper ID problem
+
+want -- how many unique papers are there in the PaperID colum in Test_V_output?
+
+Note: This is a vector of lists.
+
+1. Remove "junk" characters
+  gsub("[", "]", "//', " ", df$PaperIDs)
+2. Split up lists of IDs
+  SplitPaperIDs <- unlist(strsplit(df$PaperIDs, ","))
+3. Revectorize to vector of individual IDs
+  vect1 = c()
+  for (every in SplitPaperIDs){
+    append to vect1
+  }
+4. Count unique paper IDs
+  length(unique(vect1))

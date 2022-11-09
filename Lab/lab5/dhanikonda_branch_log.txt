@@ -1,0 +1,35 @@
+commit c512c8ce9c15e65af15d9532772a45217959ed07
+Author: “Nagendra <dhanikonda@gmail.com>
+Date:   Sun Oct 9 22:08:22 2022 -0400
+
+    README.md was renamed to Dhanikonda_branch_README.md and it was updated to account for the Lecture_stuff and Relavent_papers folders
+
+commit dff065b10549a6e8f4f4ee3d10afab99d4c39858
+Author: “Nagendra <dhanikonda@gmail.com>
+Date:   Sun Oct 9 22:03:57 2022 -0400
+
+    Folder called Lecture_stuff was created and all files supplied by the instructor were moved into the folder
+
+commit 49347050c29ba22df1070086072b84328f0c52c8
+Author: “Nagendra <dhanikonda@gmail.com>
+Date:   Sun Oct 9 22:02:15 2022 -0400
+
+    Relavent_papers file was added with the paper about HIV R script in it
+
+commit 8b7dd8257f5d1ebf85541db436046f9db08f0761
+Author: Casey Hansen <casey@Caseys-MacBook-Pro.local>
+Date:   Tue Oct 4 10:26:20 2022 -0400
+
+    initial commit
+
+commit e54b90325910d78b34f6097faee0aaadd9bdf8e5
+Author: casey-hansen <112713946+casey-hansen@users.noreply.github.com>
+Date:   Mon Oct 3 12:27:17 2022 -0400
+
+    Add files via upload
+
+commit b75b416806bf01b5aed49c9bdab4947ddca0fd51
+Author: casey-hansen <112713946+casey-hansen@users.noreply.github.com>
+Date:   Sun Oct 2 19:49:06 2022 -0400
+
+    Initial commit
