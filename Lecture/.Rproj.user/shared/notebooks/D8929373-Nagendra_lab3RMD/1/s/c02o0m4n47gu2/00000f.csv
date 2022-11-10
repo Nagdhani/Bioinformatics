@@ -1,1 +1,0 @@
-"0","Test_V_outputs$Calc_TotScore <- (Test_V_outputs$Kind.Score+(Test_V_outputs$Evidence.Score*Test_V_outputs$Match.Score))*Test_V_outputs$Epistemic.Value"
