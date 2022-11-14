@@ -23,9 +23,18 @@ This subdirectory contains folders that hold information on the various parts of
 - **Proposal**: contains the proposal for the research project 
 - **RelaventDatabases**: contains an excel file with a list of possible data bases that can be used for gathering data
 - **Rubric**: contains the grading rubric for the project
-- **Data**: contains the raw data that was used for analysis.
-  -  This folder is currently populated with the text file "Dataset_S1.txt", which is comma seperated list. This file is being used as practice 
-data and was downloaded on 9/12/22 from [github](https://github.com/vsbuffalo/bds-files/tree/master/chapter-08-r). As stated by the original uploader of the data, this text file "contains SNPs, diversity, recombination, and other metrics in 1kb windows along chromosome 20 of the human genome." It should be noted that this is not the data that will be used in the final project.
+- **CodingScripts**: contains any scripts or RMD files used in the analysis
+  - FinalSequenceSort.Rmd: final file used to clean up the raw data 
+  - Low_High_Mut_Rate.Rmd: preliminary effort to clean up data (has failed code)
+- **Data**: contains the raw and cleaned data that was used for analysis.
+  - ACTG5257_CD4.txt : raw data with CD4 outcomes of patients from stanford HIV database
+  - ACTG5257_Treat_history.txt: Raw data on the ART that patients were on during the study (Stanford data base)
+  - ACTG5257_RNA.txt : raw data with viral load outcomes of patients from stanford HIV database
+  - ACTG5257_RT_fasta.txt: raw reverse transcriptase (RT) FASTA data. (Stanford HIV database)
+  - FinalBlastInput.xlsx : excel file with fasta data that is to be inputed into the BLAST tool to compare day zero to final day RT sequences
+  - BLASTFinalAlignment.csv: raw output data from the BLAST query (before clean up)
+
+
 - **Debug**: contains any debugging works that needs to be done on the code written to analyze the data.
 - **Reflection**: contains the reflection of the project
 - **FinalREADME**: contains the finalized README file for the project
