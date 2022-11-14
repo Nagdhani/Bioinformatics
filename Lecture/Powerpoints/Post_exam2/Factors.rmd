@@ -1,0 +1,93 @@
+---
+title: "Factors"
+author: "Casey Hansen"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(forcats)
+```
+
+## Reordering Factors
+
+```{r cars}
+relig <- gss_cat %>%
+  group_by(relig) %>%
+  summarize(
+    age = mean(age, na.rm=TRUE),
+    tvhours = mean(tvhours, na.rm=TRUE),
+    n=n())
+
+ggplot(relig, aes(tvhours, relig)) + geom_point()
+```
+
+## Bad Reordering
+
+```{r pressure, echo=FALSE}
+rincome <- gss_cat %>%
+  group_by(rincome) %>%
+  summarize(
+    age = mean(age, na.rm=TRUE),
+    n=n())
+ggplot(
+  rincome,
+  aes(age, fct_reorder(rincome,age))
+) + geom_point()
+```
+
+```{r}
+ggplot(
+  rincome,
+  aes(age, fct_relevel(rincome,"Not applicable"))
+) + 
+  geom_point()
+```
+
+# Modifying Factor Levels
+```{r}
+# Original levels
+kind = c('strong corroboration','weak corroboration1','weak corroboration2','weak corroboration3',
+         'full extension','hanging extension','internal extension','specification',
+         'direction contradiction','sign contradiction','attribute contradiction',
+         'flagged1','flagged2','flagged3')
+
+kind_levels <- as.factor(kind)
+
+# # Recode factor
+# new_kind <- fct_recode(kind_levels,
+#                        'new' = 'strong corroboration',
+#                        'new' = 'weak corroboration1',
+#                        'new' = 'weak corroboration2',
+#                        'new' = 'weak corroboration3',
+#                        'new' = 'full extension',
+#                        'new' = 'hanging extension',
+#                        'new' = 'internal extension',
+#                        'new' = 'specification',
+#                        'new' = 'sign contradiction',
+#                        'new' = 'attribute contradiction',
+#                        'new' = 'direction contradiction',
+#                        'new' = 'flagged1',
+#                        'new' = 'flagged2',
+#                        'new' = 'flagged3')
+
+# #Can also reduce the number of levels
+# new_kind <- fct_recode(kind_levels,
+#                        'corroboration' = 'strong corroboration',
+#                        'corroboration' = 'weak corroboration1',
+#                        'corroboration' = 'weak corroboration2',
+#                        'corroboration' = 'weak corroboration3',
+#                        'extension' = 'full extension',
+#                        'extension' = 'hanging extension',
+#                        'extension' = 'internal extension',
+#                        'extension' = 'specification',
+#                        'contradiction' = 'sign contradiction',
+#                        'contradiction' = 'attribute contradiction',
+#                        'contradiction' = 'direction contradiction',
+#                        'flagged' = 'flagged1',
+#                        'flagged' = 'flagged2',
+#                        'flagged' = 'flagged3')
+```
+
