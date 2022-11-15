@@ -29,13 +29,13 @@ library(gridExtra)
 library(ggpubr)
 
 # make all the graphs 
-PIplot <- ggplot(PIdata) + geom_density(aes(x = SimilarityPct)) 
-NRTIplot <- ggplot(NRTIdata) + geom_density(aes(x = SimilarityPct)) 
-NNRTIplot <- ggplot(NNRTIdata) + geom_density(aes(x = SimilarityPct)) 
-INIplot <- ggplot(INIdata) + geom_density(aes(x = SimilarityPct)) 
+PIplot <- ggplot(PIdata) + geom_density(aes(x = SimilarityPct)) + xlim(95.75, 100.25) 
+NRTIplot <- ggplot(NRTIdata) + geom_density(aes(x = SimilarityPct)) + xlim(95.75, 100.25)
+NNRTIplot <- ggplot(NNRTIdata) + geom_density(aes(x = SimilarityPct)) + xlim(95.75, 100.25)
+INIplot <- ggplot(INIdata) + geom_density(aes(x = SimilarityPct)) + xlim(95.75, 100.25)
 
 # display graphs together 
-ggarrange(PIplot, NRTIplot, NNRTIplot, INIplot, labels = c(), ncol = 2, nrow = 2)
+ggarrange(PIplot, NRTIplot, NNRTIplot, INIplot, labels = c("PI", "NRTI", "NNRTI", "INI"), ncol = 2, nrow = 2)
 
 
 
