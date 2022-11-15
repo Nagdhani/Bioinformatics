@@ -37,11 +37,13 @@ EndDayNumber <- SeqData$V8[idx+2]
 
 Making a dataframe with the saved rows
 ```{r}
+# making a dataframe with start and end FASTA data, patient ID, start week, and end week
 CompleteDF <- data.frame(StartSeq, EndSeq, PTID, StartDayNumber, EndDayNumber)
 ```
 
 Removing periods before nucleotide sequences
 ```{r}
+#sequences are flanked by periods. Script removes the periodas
 CompleteDF$StartSeq <- gsub("\\.","", CompleteDF$StartSeq)
 CompleteDF$EndSeq <- gsub("\\.","", CompleteDF$EndSeq)
 ```
@@ -58,13 +60,14 @@ BLAST <- read.table('/Users/nagendra/Desktop/Bioinformatics/Project/Data/BLASTFi
 ```
 Getting Blast sequences cleaned up 
 ```{r}
+#code to save line numbers that have the same patient ID in both rows. 
 ydx<-c()
 for(z in 1:length(BLAST$V1)){
   if(BLAST$V1[z]==BLAST$V2[z]){
    ydx <- append(ydx,z) 
   }
 }
-
+#creating vectors out of the indexed numbers to be used to make a dataframe.  
 PatientName <- BLAST$V1[ydx]
 SimilarityPct <- BLAST$V3[ydx]
 BPlength <- BLAST$V4[ydx]
@@ -73,19 +76,8 @@ BPlength <- BLAST$V4[ydx]
 
 Making comparison BLAST dataframe
 ```{r}
+#making a dataframe with patient ID, percent similarity, base pair length, and the end day 
 BLASTCompare <- data.frame(PatientName, SimilarityPct, BPlength, EndDayNumber)
 ```
 
-Trouble shooting
-```{r}
-numYes <- c(0)
-numNo <- c(0)
-for(s in 1:242){
-  if(BLASTCompare$PatientName[s] == CompleteDF$PTID[s]){
-    numYes <- numYes + 1
-  }else{
-    numNo <- numNo + 1
-  }
-}
-```
 
