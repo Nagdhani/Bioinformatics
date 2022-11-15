@@ -85,4 +85,37 @@ Making comparison BLAST dataframe
 BLASTCompare <- data.frame(PatientName, SimilarityPct, BPlength, EndDayNumber)
 ```
 
+# reading treatment history data, cleaning data 
+```{r}
+TxHist <- read.table("Data/ACTG5257_Treat_history.txt", sep = "\t", header = TRUE)
+colnames(TxHist)[20] <- "3TC" # fix col name error 
+TxHist <- TxHist[,2:30]
+TxData <- read.csv("Data/TxData.csv") 
+# append drug type data to BLASTCompare 
+# drug type columns init 
+BLASTCompare$PI <- c(rep("0",241)) 
+BLASTCompare$NRTI <- c(rep("0",241)) 
+BLASTCompare$NNRTI <- c(rep("0",241)) 
+BLASTCompare$INI <- c(rep("0",241)) 
+BLASTCompare$INSTI <- c(rep("0",241)) 
+txNames <- colnames(TxHist) # find column names 
+for (x in 1:947) { 
+  for (y in 6:29) {
+      txNames[y] # get column name for this cell 
+    if (TxHist[x,y] == 1) {
+      rownum <- which(TxData$Code == txNames[y]) # get row number of this drug on TxData table 
+     # print(rownum)
+      txTypeIdx <- which(colnames(BLASTCompare) == TxData[rownum, 3]) # index of drug column on BLASTCompare 
+     # print(txTypeIdx)
+      patientrow <- which(BLASTCompare$PatientName == TxHist[x,1]) #index of this patient on BLASTCompare 
+      # print(patientrow)
+      BLASTCompare[patientrow, txTypeIdx] <- 1 # assign that patient to a "1" under the correct drug type on BLASTCompare 
+    }
+  }
+  }
+  
+  
+  
+```
+
 
