@@ -1,0 +1,25 @@
+Code,Name,Type
+APV,Amprenavir,PI
+IDV,Indinavir,PI
+LPV,Lopinavir,PI
+NFV,Nelfinavir,PI
+RTV,Ritonavir,PI
+SQV,Saquinavir,PI
+ATV,Atazanavir,PI
+TPV,Tipranavir,PI
+DRV,Darunavir,PI
+AZT,Zidovudine,NRTI
+DDI,Didanosine,NRTI
+DDC,Zalcitabine,NRTI
+D4T,Stavudine,NRTI
+3TC,Lamivudine,NRTI
+ABC,Abacavir,NRTI
+FTC,Emtricitabine,NRTI
+TDF,Tenofovir,NRTI
+NVP,Nevirapine,NNRTI
+DLV,Delvaridine,NNRTI
+EFV,Efravirenz,NNRTI
+ETR,Etravirine,NNRTI
+RAL,Raltegravir,INI
+EVG,Elvitegravir,INSTI
+DTG,Dolutegravir ,INSTI

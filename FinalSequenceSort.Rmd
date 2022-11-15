@@ -10,86 +10,9 @@ WeekNumber <- SeqData$V1
 
 ```
 
-#deleting rows with intermediates between 0 and final dat
-```{r}
-SeqData<- SeqData[-c(21,22,61,62,225,226,337,338,375,376,401,402,403,404,617,618,707,708,909,910,985,986,571,572,591,592,799,800,871,872,889,890,893,929,947,973,997,1011,1061,1067,1077,1079,487,488),]
-
-```
-
-#deleting rows that only have day 0 but not a second day
-```{r}
-for(each in 1:length(WeekNumber)){
-  if (SeqData$V8[each] == 0 && SeqData$V8[each] == SeqData$V8[each+2] && is.na(SeqData$V8[each])==FALSE){
-    SeqData <- SeqData[-c(each,each+1),]
-  } else{
-    next
-  } 
-}
-```
-
-
-#Taking out patients with sequence between 0 and final(in progress)
-```{r}
-for(t in 1:length(SeqData$V2)){
-  if (SeqData$V5[t] == SeqData$V5[t+2] && SeqData$V5[t] == SeqData$V5[t+4] && is.na(SeqData$V5[t]) == FALSE) 
-    {
-    SeqData <- SeqData[-c(t+2,t+3),]
-  } else{
-    next
-  } 
-}
-```
-
-#splitting into week0 and end week sequences
-```{r}
-Week0Seq <- c()
-EndWeekSeq <- c()
-for( x in 1:length(WeekNumber)){
-  if (SeqData$V8[x] == 0 && is.na(SeqData$V8[x])==FALSE){
-   Week0Seq <- append(Week0Seq,SeqData$V1[x+1]) 
- }else if(is.na(SeqData$V8[x])){
-   next
- } else if (is.numeric(SeqData$V8[x])){
-    EndWeekSeq<- append(EndWeekSeq,SeqData$V1[x+1])
-  } else(
-    next
-  )
-}
-  
-```
-
-#creating dataframe for week data
-```{r}
-StartVsEndDF <- data.frame(Week0Seq, EndWeekSeq)
-```
-
-#stringsplit
-```{r}
-VectEnd<- unlist(strsplit(EndWeekSeq, ","))
-Vect0<- unlist(strsplit(Week0Seq, ","))
-```
-
-#removing periods in sequences
-```{r}
-StartVsEndDF$Week0Seq <- gsub("\\.","", StartVsEndDF$Week0Seq)
-StartVsEndDF$EndWeekSeq <- gsub("\\.","", StartVsEndDF$EndWeekSeq)
-```
 https://blast.ncbi.nlm.nih.gov/Blast.cgi?BLAST_SPEC=blast2seq&LINK_LOC=align2seq&PAGE_TYPE=BlastSearch 
 
-#adding patient ID next to sequence (in progress)
-```{r}
-PatientID <- c()
-for(mama in 1:length(SeqData$V1)){
-  if(SeqData$V2[mama] == SeqData$V2[mama+2] && is.na(SeqData$V2[mama])==FALSE){
-   PatientID <- append(PatientID, SeqData$V2[mama])
-  }else if(is.na(SeqData$V2[mama])){
-    next
-  } else(next)
-  }
- 
-  
-```
-INDEXING second solution ***
+INDEXING solution***
 
 ```{r}
 idx <- c()
@@ -164,5 +87,44 @@ for(s in 1:242){
     numNo <- numNo + 1
   }
 }
+```
+# reading treatment history data, cleaning data 
+```{r}
+TxHist <- read.table("Data/ACTG5257_Treat_history.txt", sep = "\t", header = TRUE)
+
+colnames(TxHist)[20] <- "3TC" # fix col name error 
+
+TxHist <- TxHist[,2:30]
+TxData <- read.csv("Data/TxData.csv") 
+
+# append drug type data to BLASTCompare 
+
+# drug type columns init 
+BLASTCompare$PI <- c(rep("0",241)) 
+BLASTCompare$NRTI <- c(rep("0",241)) 
+BLASTCompare$NNRTI <- c(rep("0",241)) 
+BLASTCompare$INI <- c(rep("0",241)) 
+BLASTCompare$INSTI <- c(rep("0",241)) 
+
+txNames <- colnames(TxHist) # find column names 
+for (x in 1:947) { 
+  for (y in 6:29) {
+      txNames[y] # get column name for this cell 
+    if (TxHist[x,y] == 1) {
+      rownum <- which(TxData$Code == txNames[y]) # get row number of this drug on TxData table 
+     # print(rownum)
+      txTypeIdx <- which(colnames(BLASTCompare) == TxData[rownum, 3]) # index of drug column on BLASTCompare 
+     # print(txTypeIdx)
+      patientrow <- which(BLASTCompare$PatientName == TxHist[x,1]) #index of this patient on BLASTCompare 
+      # print(patientrow)
+      BLASTCompare[patientrow, txTypeIdx] <- 1 # assign that patient to a "1" under the correct drug type on BLASTCompare 
+    }
+  }
+  }
+  
+
+  
+  
+
 ```
 
