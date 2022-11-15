@@ -76,18 +76,7 @@ Making comparison BLAST dataframe
 BLASTCompare <- data.frame(PatientName, SimilarityPct, BPlength, EndDayNumber)
 ```
 
-Trouble shooting
-```{r}
-numYes <- c(0)
-numNo <- c(0)
-for(s in 1:242){
-  if(BLASTCompare$PatientName[s] == CompleteDF$PTID[s]){
-    numYes <- numYes + 1
-  }else{
-    numNo <- numNo + 1
-  }
-}
-```
+
 # reading treatment history data, cleaning data 
 ```{r}
 TxHist <- read.table("Data/ACTG5257_Treat_history.txt", sep = "\t", header = TRUE)
