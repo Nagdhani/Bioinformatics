@@ -10,9 +10,8 @@ WeekNumber <- SeqData$V1
 
 ```
 
-https://blast.ncbi.nlm.nih.gov/Blast.cgi?BLAST_SPEC=blast2seq&LINK_LOC=align2seq&PAGE_TYPE=BlastSearch 
 
-INDEXING solution***
+INDEXING to clean up raw data
 
 ```{r}
 idx <- c()
@@ -54,10 +53,16 @@ Saving dataframe to a text file
 write.table(CompleteDF,'/Users/nagendra/Desktop/Bioinformatics/Project/Data/DataForBLAST.csv', sep = ",")
 ```
 
-Updating blast sequence data
+!!!NOTE!!! Between these two steps, the data frame above was opened in excel and formatted as FASTA data again to run through the blast link below. The input for blast is named as FinalBlastInput. The output generated after running this file through blast is named as BLAST final alignment. 
+
+https://blast.ncbi.nlm.nih.gov/Blast.cgi?BLAST_SPEC=blast2seq&LINK_LOC=align2seq&PAGE_TYPE=BlastSearch 
+
+Uploading blast sequence data
 ```{r}
 BLAST <- read.table('/Users/nagendra/Desktop/Bioinformatics/Project/Data/BLASTFinalAlignment.csv', sep= ",")
 ```
+
+
 Getting Blast sequences cleaned up 
 ```{r}
 #code to save line numbers that have the same patient ID in both rows. 

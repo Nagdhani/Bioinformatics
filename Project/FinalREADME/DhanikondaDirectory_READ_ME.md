@@ -29,6 +29,7 @@ This subdirectory contains folders that hold information on the various parts of
 - **Data**: contains the raw and cleaned data that was used for analysis.
   - ACTG5257_CD4.txt : raw data with CD4 outcomes of patients from stanford HIV database
   - ACTG5257_Treat_history.txt: Raw data on the ART that patients were on during the study (Stanford data base)
+  - Old data(to be deleted) file : data that was generated previous scripts but found to be inneficient. 
   - ACTG5257_RNA.txt : raw data with viral load outcomes of patients from stanford HIV database
   - ACTG5257_RT_fasta.txt: raw reverse transcriptase (RT) FASTA data. (Stanford HIV database)
   - FinalBlastInput.xlsx : excel file with fasta data that is to be inputed into the BLAST tool to compare day zero to final day RT sequences
