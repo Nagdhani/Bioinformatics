@@ -37,5 +37,155 @@ INIplot <- ggplot(INIdata) + geom_density(aes(x = SimilarityPct)) + xlim(95.75, 
 # display graphs together 
 ggarrange(PIplot, NRTIplot, NNRTIplot, INIplot, labels = c("PI", "NRTI", "NNRTI", "INI"), ncol = 2, nrow = 2)
 
+# statistics? 
 
 
+# ---------------- Not working yet ---------------------- 
+# bin different mutation rates 
+BLASTCompare$PctBinned <- cut(BLASTCompare$SimilarityPct, c(94, 96, 98, 100))
+
+viral <- read.table("ACTG5257_RNA.txt", header = TRUE) 
+cd4 <- read.table("ACTG5257_CD4.txt", header = TRUE)
+
+# making new dataframe with combined data (viral load, cd4 count, and mutation rate) so that we can use the dual y axis graph code 
+
+
+# BLASTCompare uses the patient aliases and the viral and cd4 data use the ID => have to match those up 
+ptAlias <- read.table("ACTG5257_Treat_history.txt", sep = "\t", header = TRUE) # load fresh data 
+ptAlias <- ptAlias[,1:2] # only take patient ID and alias columns 
+ptAlias <- unique(ptAlias) # remove repeats 
+ptAlias <- ptAlias[which(ptAlias$Alias %in% BLASTCompare$PatientName),] # remove patients that aren't in BLASTCompare 
+BLASTCompare$PatientID <- ptAlias$PtID # add patient ID to BLASTCompare 
+
+
+# find the bin for each row on viral / cd4 dataframes and then graph each bin separately 
+# ie each bin would have its own line graph with two y axes 
+
+viral <- viral[which(viral$PtID %in% BLASTCompare$PatientID),] # remove patients that aren't in BLASTCompare  
+cd4 <- cd4[which(cd4$PtID %in% BLASTCompare$PatientID),] # remove patients that aren't in BLASTCompare  
+
+# set up empty columns 
+# note for testing: these two lines MUST be run before the for loop each time 
+viral$PctBinned <- c(rep("",length(viral$PtID))) 
+cd4$PctBinned <- c(rep("",length(cd4$PtID))) 
+
+
+# add column with bins to viral 
+for (x in 1:length(viral$PtID)) {
+  bcrow <- which(BLASTCompare$PatientID == viral$PtID[x]) 
+  # print(bcrow) 
+  # print(BLASTCompare[bcrow,10])
+  viral$PctBinned[x] <- BLASTCompare[bcrow, 10] 
+  
+}
+viral$PctBinned <- factor(viral$PctBinned, levels = c(1,2,3), labels = c("< 96", "96-98", "98-100")) 
+  
+# add column with bins to cd4 
+for (x in 1:length(cd4$PtID)) {
+  bcrow <- which(BLASTCompare$PatientID == cd4$PtID[x]) 
+  # print(bcrow)
+  cd4$PctBinned[x] <- BLASTCompare[bcrow, 10]
+  
+}
+cd4$PctBinned <- factor(cd4$PctBinned, levels = c(1,2,3), labels = c("< 96", "96-98", "98-100")) 
+
+
+# make one dataframe for cd4 + viral load for each bin 
+# from viral: date, viral load 
+# from cd4: date, CD4Count 
+va <- which(viral$PctBinned == '< 96') # rows for combo a (<96) 
+ca <- which(cd4$PctBinned == "< 96") 
+va
+# the values for va are not correct and i have no idea why 
+
+
+# this is the point at which averages need to be done !!!!!!!!!!!!!!!!!! roughly 
+
+
+dates <- c(viral$RNADate[va], cd4$CD4Date[ca]) # just get dates 
+dates <- unique(dates) # remove duplicates 
+# this feels way more complicated than it has to be 
+
+comboa <- data.frame(dates)
+values <- c()
+
+# add viral data 
+for (x in 1:length(comboa$dates)) {
+  if (x %in% va){
+    values <-  c(values, viral$VLoad[which(viral$RNADate == comboa$dates[x])])
+    print(values)
+    # comboa$viralLoad[x] <- 
+  }
+  
+  
+} 
+#UGHHHHHHHHHHH 
+
+# add cd4 data 
+for (x in 1:length(comboa$dates)) {
+  comboa$CD4Count[x] <- cd4$CD4Count[which(cd4$CD4Date == comboa$dates[x])] 
+  
+}
+
+# im getting warnings but im gonna check if the data are correct and if so then just ignore the warnings 
+# fuck wait 
+# i need to get the average bc there can be multiple patients that have the same viral load on the same day 
+# fuckkkkkkk 
+# so basically i need to go back through what i have and check if its working mostly correctly and if so i can just add in the averaging somewhere 
+  
+
+# the following code is modified from https://r-graph-gallery.com/line-chart-dual-Y-axis-ggplot2.html 
+# -- 
+# Value used to transform the data
+coeff <- (sum(cd4$CD4Count) / length(cd4$CD4Count)) / (sum(viral$VLoad) / length(viral$VLoad)) # scale transform value for graph, maybe do 150 for more even axis tick marks 
+
+# for patient 260273-- nothing's working so I'm typing it manually 
+# removed dates from viral that werent in cd4 
+week <- c(-2, 0,  
+           23, 34, 49, 
+           62, 79, 95, 108, 
+           125, 133, 138) 
+vload <- c(5.1, 5.0, 
+           1.6, 1.6, 4.5, 
+           1.6, 1.6, 2.0, 2.8, 
+           2.9, 5.1, 2.6) 
+ccount <- c(72, 69, 131, 203, 223, 
+            340, 388, 402, 460, 525, 
+            418, 476)
+data <- data.frame(week, vload, ccount)
+
+# A few constants
+viralColor <- "#69b3a2"
+cd4Color <- rgb(0.2, 0.6, 0.9, 1)
+
+ggplot(data, aes(x=week)) +
+  
+  geom_line( aes(y=vload), size=2, color=viralColor) + 
+  geom_line( aes(y=ccount / coeff), size=2, color=cd4Color) +
+  
+  scale_y_continuous(
+    
+    # Features of the first axis
+    name = "Viral Load",
+    
+    # Add a second axis and specify its features
+    sec.axis = sec_axis(~.*coeff, name="CD4 Count")
+  ) + 
+  
+  theme_classic() +
+  
+  theme(
+    axis.title.y = element_text(color = viralColor, size=13),
+    axis.title.y.right = element_text(color = cd4Color, size=13)
+  ) +
+  
+  ggtitle("Patient Outcomes for Patient 227")
+# -- 
+
+# --------------ushr stuff-------------------- 
+library(ushr)
+udata <- data.frame(viral$PtID, viral$VLoad, viral$RNADate)
+colnames(udata) <- c("id", "vl", "time")
+
+output <- ushr(udata, filter = FALSE)
+# okay idk what to do with this :-/ 

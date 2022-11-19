@@ -6,8 +6,7 @@ Directions for debug:
 	- TxData.csv 
 
 2. Adjust file paths to match where you are storing the data. 
-	Lines: 8, 52, 57, 82, 87 
 
 3. Run file FinalSequenceSort.Rmd 
 
-4. Run Graphs.R to create graphs 
+4. Run Graphs.R
