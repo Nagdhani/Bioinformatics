@@ -139,29 +139,32 @@ for (x in 1:length(comboa$dates)) {
 # Value used to transform the data
 coeff <- (sum(cd4$CD4Count) / length(cd4$CD4Count)) / (sum(viral$VLoad) / length(viral$VLoad)) # scale transform value for graph, maybe do 150 for more even axis tick marks 
 
-# for patient 260273-- nothing's working so I'm typing it manually 
+# --------- <96 % ---------- 
+# for patient 260273 /pt227  
+# this is the only patient with <96% similarity 
+# nothing's working so I'm typing it manually
 # removed dates from viral that werent in cd4 
 week <- c(-2, 0,  
            23, 34, 49, 
            62, 79, 95, 108, 
            125, 133, 138) 
-vload <- c(5.1, 5.0, 
+vload1 <- c(5.1, 5.0, 
            1.6, 1.6, 4.5, 
            1.6, 1.6, 2.0, 2.8, 
            2.9, 5.1, 2.6) 
-ccount <- c(72, 69, 131, 203, 223, 
+ccount1 <- c(72, 69, 131, 203, 223, 
             340, 388, 402, 460, 525, 
             418, 476)
-data <- data.frame(week, vload, ccount)
+data1 <- data.frame(week, vload1, ccount1)
 
 # A few constants
 viralColor <- "#69b3a2"
 cd4Color <- rgb(0.2, 0.6, 0.9, 1)
 
-ggplot(data, aes(x=week)) +
+plot1 <- ggplot(data1, aes(x=week)) +
   
-  geom_line( aes(y=vload), size=2, color=viralColor) + 
-  geom_line( aes(y=ccount / coeff), size=2, color=cd4Color) +
+  geom_line( aes(y=vload1), size=2, color=viralColor) + 
+  geom_line( aes(y=ccount1 / coeff), size=2, color=cd4Color) +
   
   scale_y_continuous(
     
@@ -179,8 +182,102 @@ ggplot(data, aes(x=week)) +
     axis.title.y.right = element_text(color = cd4Color, size=13)
   ) +
   
-  ggtitle("Patient Outcomes for Patient 227")
+  ggtitle("Patient 227 Outcomes")
+
+# ---------- 96-98% -------- 
+# patient number 260070 / pt24 
+# didn't look at viral load / cd4 numbers, just picked one that had data for a good number of weeks 
+
+
+week <- c(0, 1, 4, 15, 
+           24, 36, 48, 64, 72, 
+           81, 96, 112, 126) 
+vload2 <- c(4.6, 4.5, 2.8, 1.6,
+            1.6, 1.6, 1.6, 3.8, 1.6,
+            1.6, 1.7, 1.6, 1.6) 
+ccount2 <- c(370, 300, 446, 409,
+             666, 538, 650, 518, 539,
+             497, 595, 515, 714)
+data2 <- data.frame(week, vload2, ccount2)
+
+# A few constants
+viralColor <- "#69b3a2"
+cd4Color <- rgb(0.2, 0.6, 0.9, 1)
+
+plot2 <- ggplot(data2, aes(x=week)) +
+  
+  geom_line( aes(y=vload2), size=2, color=viralColor) + 
+  geom_line( aes(y=ccount2 / coeff), size=2, color=cd4Color) +
+  
+  scale_y_continuous(
+    
+    # Features of the first axis
+    name = "Viral Load",
+    
+    # Add a second axis and specify its features
+    sec.axis = sec_axis(~.*coeff, name="CD4 Count")
+  ) + 
+  
+  theme_classic() +
+  
+  theme(
+    axis.title.y = element_text(color = viralColor, size=13),
+    axis.title.y.right = element_text(color = cd4Color, size=13)
+  ) +
+  
+  ggtitle("Patient 24 Outcomes")
+
+
+# ---------- 98-100 ------------- 
+# patient number 260066 / pt20 
+# didn't look at viral load / cd4 numbers, just picked one that had data for a good number of weeks 
+
+
+week <- c(0, 1, 5, 17, 25,
+           37, 49, 65, 81, 97, 
+           114, 129, 149, 167, 181) 
+vload3 <- c(4.2, 4.0, 1.6, 1.6, 1.6,
+            1.6, 1.6, 1.6, 1.6, 1.6, 
+            1.6, 1.6, 1.6, 4.2, 1.6) 
+ccount3 <- c(458, 479, 432, 427, 389,
+             652, 523, 536, 784, 739,
+             802, 849, 914, 600, 1110)
+data3 <- data.frame(week, vload3, ccount3)
+
+# A few constants
+viralColor <- "#69b3a2"
+cd4Color <- rgb(0.2, 0.6, 0.9, 1)
+
+plot3 <- ggplot(data3, aes(x=week)) +
+  
+  geom_line( aes(y=vload3), size=2, color=viralColor) + 
+  geom_line( aes(y=ccount3 / coeff), size=2, color=cd4Color) +
+  
+  scale_y_continuous(
+    
+    # Features of the first axis
+    name = "Viral Load",
+    
+    # Add a second axis and specify its features
+    sec.axis = sec_axis(~.*coeff, name="CD4 Count")
+  ) + 
+  
+  theme_classic() +
+  
+  theme(
+    axis.title.y = element_text(color = viralColor, size=13),
+    axis.title.y.right = element_text(color = cd4Color, size=13)
+  ) +
+  
+  ggtitle("Patient 20 Outcomes")
+
+
 # -- 
+
+# put em all together 
+ggarrange(plot1, plot2, plot3, labels = c("", "", ""), ncol = 2, nrow = 2)
+ 
+
 
 # --------------ushr stuff-------------------- 
 library(ushr)
