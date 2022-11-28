@@ -7,6 +7,17 @@ library(ggplot2)
 # density plot of similarity values 
 ggplot(BLASTCompare) + geom_density(aes(x = SimilarityPct))
 
+# new version with nice colors 
+# https://www.r-bloggers.com/2022/07/how-to-change-background-color-in-ggplot2-3/
+ggplot(BLASTCompare) + geom_density(aes(x = SimilarityPct), size = 2) + 
+  theme(panel.background = element_rect(fill = '#DAE3F3', color = 'black'),
+              panel.grid.major = element_line(color = 'grey', linetype = 'solid'),
+              panel.grid.minor = element_line(color = 'grey'),
+              axis.text=element_text(size=12),
+              axis.title=element_text(size=14)) + 
+  xlab("Percent Similarity") + 
+  ylab("Density") 
+
 # relationship between similarity and study length 
 ggplot(BLASTCompare) + geom_point(aes(x = EndDayNumber, y = SimilarityPct))
 
@@ -24,20 +35,61 @@ NNRTIdata <- BLASTCompare[which(BLASTCompare$NNRTI == 1),]
 INIdata <- BLASTCompare[which(BLASTCompare$INI == 1),]
 # no patients for INSTI   
 
+# statistics 
+mean(PIdata$SimilarityPct) # 98.82379 
+mean(NRTIdata$SimilarityPct) # 98.83023 
+mean(NNRTIdata$SimilarityPct) # 99.11367 
+mean(INIdata$SimilarityPct) # 98.84467
+
 # libraries for putting ggplots together on one page 
 library(gridExtra) 
 library(ggpubr)
 
 # make all the graphs 
-PIplot <- ggplot(PIdata) + geom_density(aes(x = SimilarityPct)) + xlim(95.75, 100.25) + ylim(0,0.7)
+PIplot <- ggplot(PIdata) + geom_density(aes(x = SimilarityPct)) + xlim(95.75, 100.25) + ylim(0,0.7) 
 NRTIplot <- ggplot(NRTIdata) + geom_density(aes(x = SimilarityPct)) + xlim(95.75, 100.25) + ylim(0,0.7)
 NNRTIplot <- ggplot(NNRTIdata) + geom_density(aes(x = SimilarityPct)) + xlim(95.75, 100.25) + ylim(0,0.7)
 INIplot <- ggplot(INIdata) + geom_density(aes(x = SimilarityPct)) + xlim(95.75, 100.25) + ylim(0,0.7)
 
 # display graphs together 
-ggarrange(PIplot, NRTIplot, NNRTIplot, INIplot, labels = c("PI", "NRTI", "NNRTI", "INI"), ncol = 2, nrow = 2)
+ggarrange(PIplot, NRTIplot, NNRTIplot, INIplot, labels = c("PI", "NRTI", "NNRTI", "INI"), ncol = 2, nrow = 2) 
 
-# statistics? 
+# colorful version 
+PIplot2 <- ggplot(PIdata) + geom_density(aes(x = SimilarityPct), size = 1) + xlim(95.75, 100.25) + ylim(0,0.7) + 
+  theme(panel.background = element_rect(fill = '#DAE3F3', color = 'black'),
+        panel.grid.major = element_line(color = 'grey', linetype = 'solid'),
+        panel.grid.minor = element_line(color = 'grey'),
+        axis.text=element_text(size=12),
+        axis.title=element_text(size=14)) + 
+  xlab("Percent Similarity") + 
+  ylab("Density")
+NRTIplot2 <- ggplot(NRTIdata) + geom_density(aes(x = SimilarityPct), size = 1) + xlim(95.75, 100.25) + ylim(0,0.7)+ 
+  theme(panel.background = element_rect(fill = '#DAE3F3', color = 'black'),
+        panel.grid.major = element_line(color = 'grey', linetype = 'solid'),
+        panel.grid.minor = element_line(color = 'grey'),
+        axis.text=element_text(size=12),
+        axis.title=element_text(size=14))+ 
+  xlab("Percent Similarity") + 
+  ylab("Density")
+NNRTIplot2 <- ggplot(NNRTIdata) + geom_density(aes(x = SimilarityPct), size = 1) + xlim(95.75, 100.25) + ylim(0,0.7)+ 
+  theme(panel.background = element_rect(fill = '#DAE3F3', color = 'black'),
+        panel.grid.major = element_line(color = 'grey', linetype = 'solid'),
+        panel.grid.minor = element_line(color = 'grey'),
+        axis.text=element_text(size=12),
+        axis.title=element_text(size=14))+ 
+  xlab("Percent Similarity") + 
+  ylab("Density")
+INIplot2 <- ggplot(INIdata) + geom_density(aes(x = SimilarityPct), size = 1) + xlim(95.75, 100.25) + ylim(0,0.7)+ 
+  theme(panel.background = element_rect(fill = '#DAE3F3', color = 'black'),
+        panel.grid.major = element_line(color = 'grey', linetype = 'solid'),
+        panel.grid.minor = element_line(color = 'grey'),
+        axis.text=element_text(size=12),
+        axis.title=element_text(size=14))+ 
+  xlab("Percent Similarity") + 
+  ylab("Density")
+
+# display graphs together 
+ggarrange(PIplot2, NRTIplot2, NNRTIplot2, INIplot2, labels = c("PI", "NRTI", "NNRTI", "INI"), ncol = 2, nrow = 2) 
 
 
 # ---------------- Not working yet ---------------------- 
